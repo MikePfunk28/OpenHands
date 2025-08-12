@@ -4,6 +4,7 @@ import store from "#/store";
 import { ObservationMessage } from "#/types/message";
 import { appendOutput } from "#/state/command-slice";
 import { appendJupyterOutput } from "#/state/jupyter-slice";
+import { addChatMessage } from "#/state/ai-chat-slice";
 import ObservationType from "#/types/observation-type";
 
 export function handleObservationMessage(message: ObservationMessage) {

@@ -85,10 +85,9 @@ describe("ConversationPanel", () => {
     vi.clearAllMocks();
     vi.restoreAllMocks();
     // Setup default mock for getUserConversations
-    vi.spyOn(OpenHands, "getUserConversations").mockResolvedValue({
-      results: [...mockConversations],
-      next_page_id: null,
-    });
+    vi.spyOn(OpenHands, "getUserConversations").mockResolvedValue([
+      ...mockConversations,
+    ]);
   });
 
   it("should render the conversations", async () => {
@@ -102,10 +101,7 @@ describe("ConversationPanel", () => {
 
   it("should display an empty state when there are no conversations", async () => {
     const getUserConversationsSpy = vi.spyOn(OpenHands, "getUserConversations");
-    getUserConversationsSpy.mockResolvedValue({
-      results: [],
-      next_page_id: null,
-    });
+    getUserConversationsSpy.mockResolvedValue([]);
 
     renderConversationPanel();
 
@@ -199,10 +195,7 @@ describe("ConversationPanel", () => {
     ];
 
     const getUserConversationsSpy = vi.spyOn(OpenHands, "getUserConversations");
-    getUserConversationsSpy.mockImplementation(async () => ({
-      results: mockData,
-      next_page_id: null,
-    }));
+    getUserConversationsSpy.mockImplementation(async () => mockData);
 
     const deleteUserConversationSpy = vi.spyOn(
       OpenHands,
@@ -256,10 +249,7 @@ describe("ConversationPanel", () => {
   it("should refetch data on rerenders", async () => {
     const user = userEvent.setup();
     const getUserConversationsSpy = vi.spyOn(OpenHands, "getUserConversations");
-    getUserConversationsSpy.mockResolvedValue({
-      results: [...mockConversations],
-      next_page_id: null,
-    });
+    getUserConversationsSpy.mockResolvedValue([...mockConversations]);
 
     function PanelWithToggle() {
       const [isOpen, setIsOpen] = React.useState(true);
@@ -353,10 +343,7 @@ describe("ConversationPanel", () => {
     ];
 
     const getUserConversationsSpy = vi.spyOn(OpenHands, "getUserConversations");
-    getUserConversationsSpy.mockResolvedValue({
-      results: mockRunningConversations,
-      next_page_id: null,
-    });
+    getUserConversationsSpy.mockResolvedValue(mockRunningConversations);
 
     renderConversationPanel();
 
@@ -420,10 +407,7 @@ describe("ConversationPanel", () => {
     ];
 
     const getUserConversationsSpy = vi.spyOn(OpenHands, "getUserConversations");
-    getUserConversationsSpy.mockImplementation(async () => ({
-      results: mockData,
-      next_page_id: null,
-    }));
+    getUserConversationsSpy.mockImplementation(async () => mockData);
 
     const stopConversationSpy = vi.spyOn(OpenHands, "stopConversation");
     stopConversationSpy.mockImplementation(async (id: string) => {
@@ -508,10 +492,7 @@ describe("ConversationPanel", () => {
     ];
 
     const getUserConversationsSpy = vi.spyOn(OpenHands, "getUserConversations");
-    getUserConversationsSpy.mockResolvedValue({
-      results: mockMixedStatusConversations,
-      next_page_id: null,
-    });
+    getUserConversationsSpy.mockResolvedValue(mockMixedStatusConversations);
 
     renderConversationPanel();
 

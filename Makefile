@@ -27,7 +27,7 @@ build:
 	@$(MAKE) -s check-dependencies
 	@$(MAKE) -s install-python-dependencies
 	@$(MAKE) -s install-frontend-dependencies
-	@$(MAKE) -s install-pre-commit-hooks
+	# @$(MAKE) -s install-pre-commit-hooks
 	@$(MAKE) -s build-frontend
 	@echo "$(GREEN)Build completed successfully.$(RESET)"
 

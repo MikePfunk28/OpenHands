@@ -10,6 +10,7 @@ import huggingface_hub
 import pandas as pd
 from datasets import load_dataset
 from PIL import Image
+from pydantic import SecretStr
 
 from evaluation.benchmarks.gaia.scorer import question_scorer
 from evaluation.benchmarks.gaia.utils import (
@@ -79,7 +80,8 @@ def get_config(
 
     config_copy = copy.deepcopy(config)
     load_from_toml(config_copy)
-    config.search_api_key = config_copy.search_api_key
+    if config_copy.search_api_key:
+        config.search_api_key = SecretStr(config_copy.search_api_key)
     return config
 
 

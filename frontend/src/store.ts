@@ -6,6 +6,7 @@ import fileStateReducer from "./state/file-state-slice";
 import initialQueryReducer from "./state/initial-query-slice";
 import commandReducer from "./state/command-slice";
 import terminalInputReducer from "./state/terminal-input-slice";
+import aiChatReducer from "./state/ai-chat-slice";
 import { jupyterReducer } from "./state/jupyter-slice";
 import securityAnalyzerReducer from "./state/security-analyzer-slice";
 import statusReducer from "./state/status-slice";
@@ -19,6 +20,8 @@ export const rootReducer = combineReducers({
   code: codeReducer,
   cmd: commandReducer,
   terminalInput: terminalInputReducer,
+  aiChat: aiChatReducer,
+  aiChat: aiChatReducer,
   agent: agentReducer,
   jupyter: jupyterReducer,
   securityAnalyzer: securityAnalyzerReducer,

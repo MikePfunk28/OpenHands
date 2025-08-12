@@ -3,7 +3,6 @@ import { I18nKey } from "#/i18n/declaration";
 import { SettingsInput } from "../settings-input";
 import { GitHubTokenHelpAnchor } from "./github-token-help-anchor";
 import { KeyStatusIcon } from "../key-status-icon";
-import { cn } from "#/utils/utils";
 
 interface GitHubTokenInputProps {
   onChange: (value: string) => void;
@@ -11,7 +10,6 @@ interface GitHubTokenInputProps {
   isGitHubTokenSet: boolean;
   name: string;
   githubHostSet: string | null | undefined;
-  className?: string;
 }
 
 export function GitHubTokenInput({
@@ -20,12 +18,11 @@ export function GitHubTokenInput({
   isGitHubTokenSet,
   name,
   githubHostSet,
-  className,
 }: GitHubTokenInputProps) {
   const { t } = useTranslation();
 
   return (
-    <div className={cn("flex flex-col gap-6", className)}>
+    <div className="flex flex-col gap-6">
       <SettingsInput
         testId={name}
         name={name}

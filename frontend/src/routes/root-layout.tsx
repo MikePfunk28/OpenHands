@@ -203,17 +203,16 @@ export default function MainApp() {
     >
       <Sidebar />
 
-      <div className="flex flex-col w-full h-[calc(100%-50px)] md:h-full gap-3">
+      <div
+        id="root-outlet"
+        className="h-[calc(100%-50px)] md:h-full w-full relative overflow-auto"
+      >
         {config.data?.MAINTENANCE && (
-          <div className="flex-shrink-0">
-            <MaintenanceBanner startTime={config.data.MAINTENANCE.startTime} />
-          </div>
+          <MaintenanceBanner startTime={config.data.MAINTENANCE.startTime} />
         )}
-        <div id="root-outlet" className="flex-1 relative overflow-auto">
-          <EmailVerificationGuard>
-            <Outlet />
-          </EmailVerificationGuard>
-        </div>
+        <EmailVerificationGuard>
+          <Outlet />
+        </EmailVerificationGuard>
       </div>
 
       {renderAuthModal && (

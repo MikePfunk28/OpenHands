@@ -1,21 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@heroui/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useWsClient } from '#/context/ws-client-provider';
 import { Send, ClipboardCopy, CornerDownLeft } from 'lucide-react';
 import { insertText } from '#/state/terminal-input-slice';
-
-interface Message {
-  sender: 'user' | 'ai';
-  text: string;
-}
+import { addChatMessage } from '#/state/ai-chat-slice';
+import { RootState } from '#/store';
 
 function AIChatPanel() {
-  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
-  const { send, lastMessage } = useWsClient();
+  const { send } = useWsClient();
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
   const dispatch = useDispatch();
+
+  // Get messages from the Redux store
+  const messages = useSelector((state: RootState) => state.aiChat.messages);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -25,27 +24,12 @@ function AIChatPanel() {
     scrollToBottom();
   }, [messages]);
 
-  useEffect(() => {
-    if (lastMessage) {
-      try {
-        const event = JSON.parse(lastMessage.data);
-        if (event.action === 'ai_chat_response') {
-          const aiMessage = event.data.message || event.data.error || 'No response';
-          setMessages((prevMessages) => [
-            ...prevMessages,
-            { sender: 'ai', text: aiMessage },
-          ]);
-        }
-      } catch (e) {
-        // console.error('Failed to parse WebSocket message:', e);
-      }
-    }
-  }, [lastMessage]);
-
   const handleSend = () => {
     if (input.trim()) {
-      const userMessage: Message = { sender: 'user', text: input };
-      setMessages((prevMessages) => [...prevMessages, userMessage]);
+      const userMessage = { sender: 'user' as const, text: input };
+      // Dispatch action to add user message to the store
+      dispatch(addChatMessage(userMessage));
+      // Send the message to the backend
       send({ action: 'ai_chat', data: { prompt: input } });
       setInput('');
     }

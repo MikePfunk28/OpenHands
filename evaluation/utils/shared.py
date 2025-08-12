@@ -263,20 +263,19 @@ def prepare_dataset(
             f'Randomly sampling {eval_n_limit} unique instances with random seed 42.'
         )
 
-    def make_serializable(instance_dict: dict) -> dict:
+    def make_serializable(instance: pd.Series) -> dict:
         import numpy as np
 
+        instance_dict = instance.to_dict()
         for k, v in instance_dict.items():
             if isinstance(v, np.ndarray):
                 instance_dict[k] = v.tolist()
             elif isinstance(v, pd.Timestamp):
                 instance_dict[k] = str(v)
-            elif isinstance(v, dict):
-                instance_dict[k] = make_serializable(v)
         return instance_dict
 
     new_dataset = [
-        make_serializable(instance.to_dict())
+        make_serializable(instance)
         for _, instance in dataset.iterrows()
         if str(instance[id_column]) not in finished_ids
     ]
