@@ -11,7 +11,7 @@
     "@heroui/use-infinite-scroll": "^2.2.10",
     "@microlink/react-json-view": "^1.26.2",
     "@monaco-editor/react": "^4.7.0-rc.0",
-    "@react-router/node": "^7.8.0",
+    "@react-router/node": "^7.9.4",
     "@react-router/serve": "^7.8.0",
     "@react-types/shared": "^3.31.0",
     "@reduxjs/toolkit": "^2.8.2",
